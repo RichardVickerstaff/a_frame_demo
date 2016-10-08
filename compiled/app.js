@@ -57,10 +57,12 @@
 
 	var React = __webpack_require__(5);
 	var ReactDOM = __webpack_require__(37);
-	var Box = __webpack_require__(175);
+	var Scene = __webpack_require__(177);
 
 	var init = function init() {
-	  ReactDOM.render(React.createElement(Box, null), document.getElementById('scene'));
+	  ReactDOM.render(React.createElement(Scene, null), document.getElementById('scene'));
+
+	  var box = document.getElementById('abox');
 	};
 
 	window.onload = init;
@@ -89277,15 +89279,74 @@
 	module.exports = React.createClass({
 	  displayName: 'Box',
 
+	  getInitialState: function getInitialState() {
+	    return { color: "#6173F4" };
+	  },
+
+	  click: function click() {
+	    this.setState({ color: '#' + Math.floor(Math.random() * 16777215).toString(16) });
+	  },
+
 	  render: function render() {
 	    return React.createElement(
 	      'a-box',
-	      { color: '#6173F4', position: '0 0 -5' },
+	      { id: 'abox', color: this.state.color, position: '0 0 -5', onClick: this.click },
 	      React.createElement(
 	        'a-animation',
 	        { attribute: 'rotation', repeat: 'indefinite', to: '0 360 0' },
 	        ' '
 	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(5);
+
+	module.exports = React.createClass({
+	  displayName: 'Box',
+
+	  mouseOver: function mouseOver() {
+	    console.log('hover');
+	  },
+
+	  click: function click() {
+	    console.log('click');
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'a-camera',
+	      { position: '0 0 0' },
+	      React.createElement('a-cursor', { color: '#FF0000' })
+	    );
+	  }
+	});
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(5);
+	var Box = __webpack_require__(175);
+	var Camera = __webpack_require__(176);
+
+	module.exports = React.createClass({
+	  displayName: 'Scene',
+
+	  render: function render() {
+	    return React.createElement(
+	      'a-scene',
+	      null,
+	      React.createElement(Box, null),
+	      React.createElement(Camera, null)
 	    );
 	  }
 	});
