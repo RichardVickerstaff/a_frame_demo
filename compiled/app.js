@@ -89288,15 +89288,7 @@
 	  },
 
 	  render: function render() {
-	    return React.createElement(
-	      'a-box',
-	      { id: 'abox', color: this.state.color, position: '0 0 -5', onClick: this.click },
-	      React.createElement(
-	        'a-animation',
-	        { attribute: 'rotation', repeat: 'indefinite', to: '0 360 0' },
-	        ' '
-	      )
-	    );
+	    return React.createElement('a-box', { id: 'abox', color: this.state.color, position: '0 0 -5', onClick: this.click });
 	  }
 	});
 

@@ -14,7 +14,6 @@ module.exports = React.createClass({
   render: function() {
     return (
       <a-box id='abox' color={ this.state.color } position="0 0 -5"  onClick={ this.click } >
-        <a-animation attribute="rotation" repeat="indefinite" to="0 360 0"> </a-animation>
       </a-box>
     );
   }
