@@ -57,7 +57,7 @@
 
 	var React = __webpack_require__(5);
 	var ReactDOM = __webpack_require__(37);
-	var Scene = __webpack_require__(177);
+	var Scene = __webpack_require__(175);
 
 	var init = function init() {
 	  ReactDOM.render(React.createElement(Scene, null), document.getElementById('scene'));
@@ -89275,25 +89275,65 @@
 	'use strict';
 
 	var React = __webpack_require__(5);
+	var Box = __webpack_require__(176);
+	var Camera = __webpack_require__(177);
 
 	module.exports = React.createClass({
-	  displayName: 'Box',
-
-	  getInitialState: function getInitialState() {
-	    return { color: "#6173F4" };
-	  },
-
-	  click: function click() {
-	    this.setState({ color: '#' + Math.floor(Math.random() * 16777215).toString(16) });
-	  },
+	  displayName: 'Scene',
 
 	  render: function render() {
-	    return React.createElement('a-box', { id: 'abox', color: this.state.color, position: '0 0 -5', onClick: this.click });
+	    return React.createElement(
+	      'a-scene',
+	      null,
+	      React.createElement(Box, null),
+	      React.createElement(Camera, null)
+	    );
 	  }
 	});
 
 /***/ },
 /* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(5);
+	var min = -10;
+	var max = 10;
+
+	module.exports = React.createClass({
+	  displayName: 'Box',
+
+	  random: function random() {
+	    return Math.floor(Math.random() * (max - min + 1)) + min;
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      color: "#6173F4",
+	      x: 0,
+	      y: 0,
+	      z: -5
+	    };
+	  },
+
+	  click: function click() {
+	    this.setState({ x: this.random() });
+	    this.setState({ y: this.random() });
+	    this.setState({ z: -10 * Math.random() });
+	  },
+
+	  getPosition: function getPosition() {
+	    return this.state.x + " " + this.state.y + " " + this.state.z;
+	  },
+
+	  render: function render() {
+	    return React.createElement('a-box', { id: 'abox', color: this.state.color, position: this.getPosition(), onClick: this.click });
+	  }
+	});
+
+/***/ },
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89316,29 +89356,6 @@
 	      'a-camera',
 	      { position: '0 0 0' },
 	      React.createElement('a-cursor', { color: '#FF0000' })
-	    );
-	  }
-	});
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(5);
-	var Box = __webpack_require__(175);
-	var Camera = __webpack_require__(176);
-
-	module.exports = React.createClass({
-	  displayName: 'Scene',
-
-	  render: function render() {
-	    return React.createElement(
-	      'a-scene',
-	      null,
-	      React.createElement(Box, null),
-	      React.createElement(Camera, null)
 	    );
 	  }
 	});
