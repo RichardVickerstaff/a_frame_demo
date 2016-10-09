@@ -1,13 +1,13 @@
 var React = require('react');
 
 module.exports = React.createClass({
-  displayName:'Camera',
+  displayName:'ScoreBoard',
 
   render: function() {
     return (
-      <a-camera position="0 0 0" >
-        <a-cursor color="#FF0000" />
-      </a-camera>
+      <div>
+        Score: {this.props.score}
+      </div>
     );
   }
 });

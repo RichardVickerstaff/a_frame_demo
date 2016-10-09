@@ -1,4 +1,6 @@
 var React = require('react');
+var et = require('eventthing');
+
 var min = -10;
 var max = 10;
 
@@ -22,6 +24,7 @@ module.exports = React.createClass({
     this.setState({ x : this.random() } );
     this.setState({ y : this.random() } );
     this.setState({ z : -10 * Math.random() } );
+    et.emit('score');
   },
 
   getPosition: function() {

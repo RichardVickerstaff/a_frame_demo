@@ -59,10 +59,15 @@
 	var ReactDOM = __webpack_require__(37);
 	var Scene = __webpack_require__(175);
 
-	var init = function init() {
-	  ReactDOM.render(React.createElement(Scene, null), document.getElementById('scene'));
+	var et = __webpack_require__(179);
+	var score = 0;
+	et.on('score', function () {
+	  score += 1;
+	  init();
+	});
 
-	  var box = document.getElementById('abox');
+	var init = function init() {
+	  ReactDOM.render(React.createElement(Scene, { score: score }), document.getElementById('scene'));
 	};
 
 	window.onload = init;
@@ -89275,8 +89280,10 @@
 	'use strict';
 
 	var React = __webpack_require__(5);
+
 	var Box = __webpack_require__(176);
 	var Camera = __webpack_require__(177);
+	var ScoreBoard = __webpack_require__(178);
 
 	module.exports = React.createClass({
 	  displayName: 'Scene',
@@ -89285,6 +89292,7 @@
 	    return React.createElement(
 	      'a-scene',
 	      null,
+	      React.createElement(ScoreBoard, { score: this.props.score }),
 	      React.createElement(Box, null),
 	      React.createElement(Camera, null)
 	    );
@@ -89298,6 +89306,8 @@
 	'use strict';
 
 	var React = __webpack_require__(5);
+	var et = __webpack_require__(179);
+
 	var min = -10;
 	var max = 10;
 
@@ -89321,6 +89331,7 @@
 	    this.setState({ x: this.random() });
 	    this.setState({ y: this.random() });
 	    this.setState({ z: -10 * Math.random() });
+	    et.emit('score');
 	  },
 
 	  getPosition: function getPosition() {
@@ -89341,15 +89352,7 @@
 	var React = __webpack_require__(5);
 
 	module.exports = React.createClass({
-	  displayName: 'Box',
-
-	  mouseOver: function mouseOver() {
-	    console.log('hover');
-	  },
-
-	  click: function click() {
-	    console.log('click');
-	  },
+	  displayName: 'Camera',
 
 	  render: function render() {
 	    return React.createElement(
@@ -89359,6 +89362,133 @@
 	    );
 	  }
 	});
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(5);
+
+	module.exports = React.createClass({
+	  displayName: 'ScoreBoard',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'Score: ',
+	      this.props.score
+	    );
+	  }
+	});
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {var events = {};
+
+	var on = function(event, func){
+		if (Array.isArray(event)){
+			// multiple events
+			event.forEach(function(ev){
+				on(ev, func);
+			});	
+			return;
+		}
+
+		if (Array.isArray(func)){
+			// multiple functions
+			func.forEach(function(fn){
+				on(event, fn);			
+			});
+			return;
+		}
+
+		if (typeof event === 'object'){
+			for (ev in event){
+				on(ev,event[ev]);
+			}
+			return;
+		}
+
+		if (!events[event]) events[event] = [];
+		events[event].push(func);
+	};
+
+	var emit = function(event, arg){
+
+		if (Array.isArray(event)){
+			event.forEach(function(ev){
+				emit(ev,arg);
+			});
+			return;
+		}
+
+		(events[event] || []).forEach(function(func){
+			func(arg, event);
+		});
+
+
+		(events['*'] || []).forEach(function(func){
+			func(arg, event);
+		});
+	};
+
+	var clearAll = function(){
+		events = {};
+	};
+
+	var clear = function(event){
+		if (!events[event]) {
+			Object.keys(events).forEach(function(key){
+				if (events[key].indexOf(event) !== -1){
+					events[key] = events[key].filter(function(x){
+						return x !== event;
+					});
+				}
+			});
+		}
+		events[event] = [];
+	};
+
+	var methods = {
+	  clear: clear,
+	  clearAll: clearAll,
+	  on: on,
+	  sub: on,
+	  emit: emit,
+	  fire: emit,
+	  pub: emit
+	};
+
+	if(module && module.exports){
+	  module.exports = methods;
+	}else{
+	  if(window){
+	    window.Eventthing = methods;
+	  }
+	}
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180)(module)))
+
+/***/ },
+/* 180 */
+/***/ function(module, exports) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
 
 /***/ }
 /******/ ]);
