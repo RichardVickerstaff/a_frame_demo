@@ -59,18 +59,27 @@
 	var ReactDOM = __webpack_require__(37);
 	var Scene = __webpack_require__(175);
 
-	var et = __webpack_require__(179);
+	var et = __webpack_require__(177);
 	var score = 0;
 	et.on('score', function () {
 	  score += 1;
 	  init();
 	});
 
+	var animate = function animate() {
+	  var el = document.querySelector('#abox');
+	  var z = el.components.position.data.z;
+	  var x = el.components.position.data.x;
+	  var y = el.components.position.data.y;
+	  el.setAttribute('position', { x: x, y: y, z: z + 0.01 });
+	};
+
 	var init = function init() {
 	  ReactDOM.render(React.createElement(Scene, { score: score }), document.getElementById('scene'));
 	};
 
 	window.onload = init;
+	window.setInterval(animate, 5);
 
 /***/ },
 /* 2 */
@@ -89282,8 +89291,8 @@
 	var React = __webpack_require__(5);
 
 	var Box = __webpack_require__(176);
-	var Camera = __webpack_require__(177);
-	var ScoreBoard = __webpack_require__(178);
+	var Camera = __webpack_require__(179);
+	var ScoreBoard = __webpack_require__(180);
 
 	module.exports = React.createClass({
 	  displayName: 'Scene',
@@ -89306,7 +89315,7 @@
 	'use strict';
 
 	var React = __webpack_require__(5);
-	var et = __webpack_require__(179);
+	var et = __webpack_require__(177);
 
 	var min = -10;
 	var max = 10;
@@ -89345,47 +89354,6 @@
 
 /***/ },
 /* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(5);
-
-	module.exports = React.createClass({
-	  displayName: 'Camera',
-
-	  render: function render() {
-	    return React.createElement(
-	      'a-camera',
-	      { position: '0 0 0' },
-	      React.createElement('a-cursor', { color: '#FF0000' })
-	    );
-	  }
-	});
-
-/***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(5);
-
-	module.exports = React.createClass({
-	  displayName: 'ScoreBoard',
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      'Score: ',
-	      this.props.score
-	    );
-	  }
-	});
-
-/***/ },
-/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var events = {};
@@ -89472,10 +89440,10 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(180)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(178)(module)))
 
 /***/ },
-/* 180 */
+/* 178 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -89489,6 +89457,47 @@
 		return module;
 	}
 
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(5);
+
+	module.exports = React.createClass({
+	  displayName: 'Camera',
+
+	  render: function render() {
+	    return React.createElement(
+	      'a-camera',
+	      { position: '0 0 0' },
+	      React.createElement('a-cursor', { color: '#FF0000' })
+	    );
+	  }
+	});
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(5);
+
+	module.exports = React.createClass({
+	  displayName: 'ScoreBoard',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'Score: ',
+	      this.props.score
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);
